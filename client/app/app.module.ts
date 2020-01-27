@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { MainModule } from './main/main.module';
+import { DevicesModule } from './devices/devices.module';
 import { DirectivesModule } from '../components/directives.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AccountModule } from './account/account.module';
@@ -40,6 +41,7 @@ const appRoutes: Routes = [{ path: '',
 
         RouterModule.forRoot(appRoutes, { enableTracing: process.env.NODE_ENV === 'development' }),
         MainModule,
+        DevicesModule,
         DirectivesModule,
         AccountModule,
         AdminModule,
