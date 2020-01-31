@@ -1,3 +1,15 @@
 <div class="container">
-  <h1>Devices</h1>
+    <h1>Devices</h1>
+    <ngx-datatable class="material" [rows]="devices" [columnMode]="force" footerHeight="50">
+        <ngx-datatable-column name="Name" [width]="300">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value }}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Info" [width]="600">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value }}
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
 </div>

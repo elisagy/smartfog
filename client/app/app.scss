@@ -1,6 +1,8 @@
 $icon-font-path: '/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import '~bootstrap-social/bootstrap-social.scss';
+@import '@swimlane/ngx-datatable/index.scss';
+@import '@swimlane/ngx-datatable//themes/material.scss';
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
 
