@@ -24,6 +24,10 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   display: none !important;
 }
 
+textarea {
+  resize: none;
+}
+
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
 }

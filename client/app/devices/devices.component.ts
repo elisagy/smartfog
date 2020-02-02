@@ -10,6 +10,7 @@ import { SocketService } from '../../components/socket/socket.service';
 export class DevicesComponent implements OnInit, OnDestroy {
     SocketService;
     devices: any[] = [];
+    newDevice: any = {};
 
     static parameters = [HttpClient, SocketService];
     constructor(private http: HttpClient, private socketService: SocketService) {
@@ -21,11 +22,22 @@ export class DevicesComponent implements OnInit, OnDestroy {
         return this.http.get('/api/devices')
             .subscribe((devices: any[]) => {
                 this.devices = devices;
-                this.SocketService.syncUpdates('device', this.devices);
+                this.SocketService.syncUpdates('device', this.devices, () => {
+                    this.devices = [...this.devices];
+                });
             });
     }
 
     ngOnDestroy() {
         this.SocketService.unsyncUpdates('device');
+    }
+
+    addDevice() {
+        if (this.newDevice) {
+            return this.http.post('/api/devices', this.newDevice)
+                .subscribe(device => {
+                    this.newDevice = {};
+                });
+        }
     }
 }

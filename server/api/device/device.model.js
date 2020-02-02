@@ -1,11 +1,25 @@
 import mongoose from 'mongoose';
-import {registerEvents} from './device.events';
+import timestamps from 'mongoose-timestamp';
+import { registerEvents } from './device.events';
 
 var DeviceSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+    name: {
+        type: String,
+        required: true
+    },
+    info: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    active: {
+        type: Boolean,
+        required: true,
+        default: true
+    }
 });
 
+DeviceSchema.plugin(timestamps);
 registerEvents(DeviceSchema);
 export default mongoose.model('Device', DeviceSchema);

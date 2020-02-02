@@ -1,15 +1,41 @@
 <div class="container">
     <h1>Devices</h1>
-    <ngx-datatable class="material" [rows]="devices" [columnMode]="force" footerHeight="50">
-        <ngx-datatable-column name="Name" [width]="300">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value }}
-            </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Info" [width]="600">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value }}
-            </ng-template>
-        </ngx-datatable-column>
-    </ngx-datatable>
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="form-group">
+                <ngx-datatable class="material" [rows]="devices" [columnMode]="force" [trackByProp]="'_id'" footerHeight="50">
+                    <ngx-datatable-column name="Name" [width]="300">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Info" [width]="600">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <form class="form" name="newDeviceForm" (ngSubmit)="addDevice()" novalidate #newDeviceForm="ngForm">
+                <div class="form-group">
+                    <h3>New Device</h3>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="email" class="form-control" [(ngModel)]="newDevice.name" required #name="ngModel">
+                </div>
+                <div class="form-group">
+                    <label>Info</label>
+                    <textarea name="info" class="form-control" [(ngModel)]="newDevice.info" #info="ngModel"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-inverse btn-sm btn-login" type="submit" [disabled]="!newDeviceForm.form.valid">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
