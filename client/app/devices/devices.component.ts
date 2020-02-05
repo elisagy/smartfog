@@ -22,8 +22,8 @@ export class DevicesComponent implements OnInit, OnDestroy {
         return this.http.get('/api/devices')
             .subscribe((devices: any[]) => {
                 this.devices = devices;
-                this.SocketService.syncUpdates('device', this.devices, () => {
-                    this.devices = [...this.devices];
+                this.SocketService.syncUpdates('device', this.devices, (event, device, devices) => {
+                    this.devices = [...devices];
                 });
             });
     }
@@ -39,5 +39,9 @@ export class DevicesComponent implements OnInit, OnDestroy {
                     this.newDevice = {};
                 });
         }
+    }
+
+    deleteDevice(deviceId) {
+        return this.http.delete(`/api/devices/${deviceId}`).subscribe();
     }
 }

@@ -61,14 +61,14 @@ function handleError(res, statusCode) {
 
 // Gets a list of Devices
 export function index(req, res) {
-    return Device.find({ user: req.user }).exec()
+    return Device.find({ user: req.user._id }).exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
 
 // Gets a single Device from the DB
 export function show(req, res) {
-    return Device.findById(req.params.id, { user: req.user }).exec()
+    return Device.findById(req.params.id, { user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
         .catch(handleError(res));
@@ -86,7 +86,7 @@ export function upsert(req, res) {
     if (req.body._id) {
         Reflect.deleteProperty(req.body, '_id');
     }
-    return Device.findOneAndUpdate({ _id: req.params.id, user: req.user }, req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }).exec()
+    return Device.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }).exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
@@ -96,7 +96,7 @@ export function patch(req, res) {
     if (req.body._id) {
         Reflect.deleteProperty(req.body, '_id');
     }
-    return Device.findById(req.params.id, { user: req.user }).exec()
+    return Device.findById(req.params.id, { user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(patchUpdates(req.body))
         .then(respondWithResult(res))
@@ -105,7 +105,7 @@ export function patch(req, res) {
 
 // Deletes a Device from the DB
 export function destroy(req, res) {
-    return Device.findById(req.params.id, { user: req.user }).exec()
+    return Device.findById(req.params.id, { user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(removeEntity(res))
         .catch(handleError(res));
