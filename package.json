@@ -4,6 +4,8 @@
   "main": "server/index.js",
   "dependencies": {
     "@angular/animations": "^8.2.14",
+    "@angular/cdk": "^8.2.3",
+    "@swimlane/ngx-charts": "^13.0.2",
     "@swimlane/ngx-datatable": "^16.0.3",
     "babel-core": "^6.18.2",
     "babel-plugin-angular2-annotations": "^5.1.0",

@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { DeviceDetailsComponent } from './deviceDetails.component';
 import { SocketService } from '../../components/socket/socket.service';
@@ -31,6 +32,7 @@ export const ROUTES: Routes = [
                 selectedMessage: 'selected' // Footer selected message
             }
         }),
+        NgxChartsModule
     ],
     declarations: [
         DeviceDetailsComponent,

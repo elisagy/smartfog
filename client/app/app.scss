@@ -35,3 +35,8 @@ textarea {
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
 }
+
+/*** NGX stuff ***/
+ngx-datatable.selectable datatable-row-wrapper{
+	cursor: pointer;
+}

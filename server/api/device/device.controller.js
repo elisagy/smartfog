@@ -68,7 +68,7 @@ export function index(req, res) {
 
 // Gets a single Device from the DB
 export function show(req, res) {
-    return Device.find({ _id: req.params.id, user: req.user._id }).exec()
+    return Device.findOne({ _id: req.params.id, user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
         .catch(handleError(res));
@@ -96,7 +96,7 @@ export function patch(req, res) {
     if (req.body._id) {
         Reflect.deleteProperty(req.body, '_id');
     }
-    return Device.find({ _id: req.params.id, user: req.user._id }).exec()
+    return Device.findOne({ _id: req.params.id, user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(patchUpdates(req.body))
         .then(respondWithResult(res))
@@ -105,7 +105,7 @@ export function patch(req, res) {
 
 // Deletes a Device from the DB
 export function destroy(req, res) {
-    return Device.find({ _id: req.params.id, user: req.user._id }).exec()
+    return Device.findOne({ _id: req.params.id, user: req.user._id }).exec()
         .then(handleEntityNotFound(res))
         .then(removeEntity(res))
         .catch(handleError(res));

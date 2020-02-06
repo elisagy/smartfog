@@ -71,7 +71,7 @@ export function index(req, res) {
 // Gets a single Reading from the DB
 export function show(req, res) {
     return Device.find({ user: req.user._id }).exec()
-        .then(devices => Reading.find({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
+        .then(devices => Reading.findOne({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
         .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
         .catch(handleError(res));
@@ -101,7 +101,7 @@ export function patch(req, res) {
         Reflect.deleteProperty(req.body, '_id');
     }
     return Device.find({ user: req.user._id }).exec()
-        .then(devices => Reading.find({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
+        .then(devices => Reading.findOne({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
         .then(handleEntityNotFound(res))
         .then(patchUpdates(req.body))
         .then(respondWithResult(res))
@@ -111,7 +111,7 @@ export function patch(req, res) {
 // Deletes a Reading from the DB
 export function destroy(req, res) {
     return Device.find({ user: req.user._id }).exec()
-        .then(devices => Reading.find({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
+        .then(devices => Reading.findOne({ _id: req.params.id, device: { $in: devices.map(device => device._id) } }).exec())
         .then(handleEntityNotFound(res))
         .then(removeEntity(res))
         .catch(handleError(res));
