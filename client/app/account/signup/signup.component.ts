@@ -43,8 +43,8 @@ export class SignupComponent {
             password: this.user.password
         })
             .then(() => {
-                // Account created, redirect to home
-                this.Router.navigateByUrl('/home');
+                // Account created, redirect to devices
+                this.Router.navigateByUrl('/devices');
             })
             .catch((err: {errors: {field: ValidationError}}) => {
                 this.errors = err.errors;

@@ -41,8 +41,8 @@ export class LoginComponent {
             password: this.user.password
         })
             .then(() => {
-                // Logged in, redirect to home
-                this.Router.navigateByUrl('/home');
+                // Logged in, redirect to devices
+                this.Router.navigateByUrl('/devices');
 
             })
             .catch(err => {

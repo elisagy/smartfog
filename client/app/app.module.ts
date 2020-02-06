@@ -14,7 +14,6 @@ import {
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { MainModule } from './main/main.module';
 import { DevicesModule } from './devices/devices.module';
 import { DeviceDetailsModule } from './deviceDetails/deviceDetails.module';
 import { DirectivesModule } from '../components/directives.module';
@@ -29,7 +28,7 @@ export function tokenGetter() {
 
 const appRoutes: Routes = [{
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/devices',
     pathMatch: 'full'
 }];
 
@@ -45,7 +44,6 @@ const appRoutes: Routes = [{
         }),
 
         RouterModule.forRoot(appRoutes, { enableTracing: process.env.NODE_ENV === 'development' }),
-        MainModule,
         DevicesModule,
         DeviceDetailsModule,
         DirectivesModule,
