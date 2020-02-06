@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
 import { SocketService } from '../../components/socket/socket.service';
 
@@ -8,13 +9,16 @@ import { SocketService } from '../../components/socket/socket.service';
     styles: [require('./devices.scss')],
 })
 export class DevicesComponent implements OnInit, OnDestroy {
+    Router;
     SocketService;
     devices: any[] = [];
+    selectedDevices: any[] = [];
     newDevice: any = {};
 
-    static parameters = [HttpClient, SocketService];
-    constructor(private http: HttpClient, private socketService: SocketService) {
+    static parameters = [HttpClient, Router, SocketService];
+    constructor(private http: HttpClient, private router: Router, private socketService: SocketService) {
         this.http = http;
+        this.Router = router;
         this.SocketService = socketService;
     }
 
@@ -32,6 +36,10 @@ export class DevicesComponent implements OnInit, OnDestroy {
         this.SocketService.unsyncUpdates('device');
     }
 
+    onDeviceSelected() {
+        this.Router.navigate([`/deviceDetails/${(this.selectedDevices.pop() || {})._id}`]);
+    }
+
     addDevice() {
         if (this.newDevice) {
             return this.http.post('/api/devices', this.newDevice)
@@ -41,7 +49,8 @@ export class DevicesComponent implements OnInit, OnDestroy {
         }
     }
 
-    deleteDevice(deviceId) {
+    deleteDevice($event: any, deviceId: string) {
+        $event.stopPropagation();
         return this.http.delete(`/api/devices/${deviceId}`).subscribe();
     }
 }

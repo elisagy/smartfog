@@ -1,42 +1,38 @@
-<div class="container">
-    <h1>Devices</h1>
+<div class="container" *ngIf="device">
+    <h1>Readings For "{{ device.name }}" Device:</h1>
     <div class="row">
         <div class="col-sm-9">
             <div class="form-group">
-                <ngx-datatable class="material" [rows]="devices" [columnMode]="'force'" [trackByProp]="'_id'" rowHeight="auto" footerHeight="50" [selected]="selectedDevices" [selectionType]="'single'" (select)="onDeviceSelected(value)">
-                    <ngx-datatable-column name="Name" [width]="50">
+                <ngx-datatable class="material" [rows]="readings" [columnMode]="'force'" [trackByProp]="'_id'" rowHeight="auto" footerHeight="50">
+                    <ngx-datatable-column name="Humidity" [width]="50">
                         <ng-template let-value="value" ngx-datatable-cell-template>
                             {{ value }}
                         </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Info" [width]="auto">
+                    <ngx-datatable-column name="Created At" prop="createdAt" [width]="auto">
                         <ng-template let-value="value" ngx-datatable-cell-template>
                             {{ value }}
                         </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="" sortable="false" prop="_id" [width]="1">
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template style="text-align: right;">
-                            <button type="button" class="close" (click)="deleteDevice($event, value)">&times;</button>
+                            <button type="button" class="close" (click)="deleteReading(value)">&times;</button>
                         </ng-template>
                     </ngx-datatable-column>
                 </ngx-datatable>
             </div>
         </div>
         <div class="col-sm-3">
-            <form class="form" name="newDeviceForm" (ngSubmit)="addDevice()" novalidate #newDeviceForm="ngForm">
+            <form class="form" name="newReadingForm" (ngSubmit)="addReading()" novalidate #newReadingForm="ngForm">
                 <div class="form-group">
-                    <h3>New Device</h3>
+                    <h3>New Reading</h3>
                 </div>
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" class="form-control" [(ngModel)]="newDevice.name" required #name="ngModel">
+                    <label>Humidity</label>
+                    <input type="number" name="humidity" class="form-control" [(ngModel)]="newReading.humidity" required #name="ngModel" min="0" max="100">
                 </div>
                 <div class="form-group">
-                    <label>Info</label>
-                    <textarea name="info" class="form-control" [(ngModel)]="newDevice.info" #info="ngModel"></textarea>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-inverse btn-sm btn-login" type="submit" [disabled]="!newDeviceForm.form.valid">
+                    <button class="btn btn-inverse btn-sm btn-login" type="submit" [disabled]="!newReadingForm.form.valid">
                         Submit
                     </button>
                 </div>
