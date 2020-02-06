@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { safeCb } from '../util';
 import { userRoles } from '../../app/app.constants';
 
+import { SocketService } from '../../components/socket/socket.service';
+
 // @flow
 class User {
     _id = '';
@@ -18,11 +20,13 @@ export class AuthService {
     @Output() currentUserChanged = new EventEmitter(true);
     userRoles = userRoles || [];
     UserService;
+    SocketService;
 
-    static parameters = [HttpClient, UserService];
-    constructor(private http: HttpClient, private userService: UserService) {
+    static parameters = [HttpClient, UserService, SocketService];
+    constructor(private http: HttpClient, private userService: UserService, private socketService: SocketService) {
         this.http = http;
         this.UserService = userService;
+        this.SocketService = socketService;
 
         if(localStorage.getItem('id_token')) {
             this.UserService.get().toPromise()
@@ -33,6 +37,7 @@ export class AuthService {
                     console.log(err);
 
                     localStorage.removeItem('id_token');
+                    this.SocketService.setAuthorizationToken();
                 });
         }
     }
@@ -70,6 +75,7 @@ export class AuthService {
             .toPromise()
             .then((res: {token: string}) => {
                 localStorage.setItem('id_token', res.token);
+                this.SocketService.setAuthorizationToken();
                 return this.UserService.get().toPromise();
             })
             .then((user: User) => {
@@ -92,6 +98,7 @@ export class AuthService {
     logout() {
         localStorage.removeItem('user');
         localStorage.removeItem('id_token');
+        this.SocketService.setAuthorizationToken();
         this.currentUser = new User();
         return Promise.resolve();
     }
@@ -107,6 +114,7 @@ export class AuthService {
         return this.UserService.create(user).toPromise()
             .then(data => {
                 localStorage.setItem('id_token', data.token);
+                this.SocketService.setAuthorizationToken();
                 return this.UserService.get().toPromise();
             })
             .then((_user: User) => {

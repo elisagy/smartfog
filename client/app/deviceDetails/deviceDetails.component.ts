@@ -35,10 +35,10 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
                     this.device = devices || {};
                     return this.http.get('/api/readings')
                         .subscribe((readings: any[]) => {
-                            this.readings = readings.filter(reading => reading.device === this.device._id);
+                            this.readings = readings.filter(reading => reading.device === this.device._id || reading.device._id === this.device._id);
                             this.chartData = this.getChartData();
                             this.SocketService.syncUpdates('reading', this.readings, (event, reading, readings) => {
-                                this.readings = [...readings.filter(reading => reading.device === this.device._id)];
+                                this.readings = [...readings.filter(reading => reading.device === this.device._id || reading.device._id === this.device._id)];
                                 this.chartData = this.getChartData();
                             });
                             this.SocketService.syncUpdates('device', [], (event, device) => {

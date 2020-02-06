@@ -9,7 +9,7 @@ var events = ['save', 'remove'];
 
 export function register(spark) {
     // Bind model events to socket events
-    for(let event of events) {
+    for (let event of events) {
         var listener = createListener(`device:${event}`, spark);
 
         DeviceEvents.on(event, listener);
@@ -20,7 +20,12 @@ export function register(spark) {
 
 function createListener(event, spark) {
     return function(doc) {
-        spark.emit(event, doc);
+        if (spark.userId &&
+            doc.user &&
+            doc.user._id &&
+            doc.user._id.toString() === spark.userId) {
+            spark.emit(event, doc);
+        }
     };
 }
 
