@@ -20,13 +20,13 @@ export class UserService {
     }
 
     query(): Observable<UserType[]> {
-        return this.http.get('/api/users/') as Observable<UserType[]>;
+        return this.http.get('/api/users') as Observable<UserType[]>;
     }
     get(user: UserType = {id: 'me'}): Observable<UserType> {
         return this.http.get(`/api/users/${user.id || user._id}`) as Observable<UserType>;
     }
     create(user: UserType) {
-        return this.http.post('/api/users/', user);
+        return this.http.post('/api/users', user);
     }
     changePassword(user, oldPassword, newPassword) {
         return this.http.put(`/api/users/${user.id || user._id}/password`, {oldPassword, newPassword});

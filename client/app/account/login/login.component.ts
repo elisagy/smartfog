@@ -46,7 +46,7 @@ export class LoginComponent {
 
             })
             .catch(err => {
-                this.errors.login = err.json().message;
+                this.errors.login = err.error && err.error.message || err.message;
             });
     }
 }
