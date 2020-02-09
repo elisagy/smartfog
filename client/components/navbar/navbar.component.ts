@@ -47,7 +47,7 @@ export class NavbarComponent {
 
     logout() {
         return this.AuthService.logout().then(() => {
-            this.Router.navigateByUrl('/devices');
+            this.Router.navigateByUrl('/login');
             this.reset();
         });
     }}
